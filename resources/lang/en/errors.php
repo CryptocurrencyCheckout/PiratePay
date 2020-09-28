@@ -26,4 +26,6 @@ return [
     'woocommerce_error_settings_missing' => 'Woocommerce Response = Some of the Woocommerce settings inside PiratePay appear to not be set.',
     'woocommerce_error_values_missing' => 'Woocommerce Response = Cannot Update Order, Transaction Values appear to be missing. This could happen if the queue was cleared before completing.',
     'woocommerce_error_note_failed' => 'Woocommerce Response = Cannot Update Woocommerce Order Note, Was unable to find/edit the note attached to the order.',
+
+    'decryption_error_failed' => 'Decryption Response = PiratePay was unable to Decrypt the api keys, this decryption error could be if the platforms encryption keys were updated/changed/deleted, or if they were never created during installation.',
 ];

@@ -40,6 +40,8 @@
                                 
 
                                 @endforeach 
+
+                                {{ $errors->links() }}
                         @else
                                 <li class="list-group-item">
                                         <div class="container-fluid">
@@ -55,7 +57,6 @@
                 </li>
         </ul>
 
-        {{ $errors->links() }}
 
 </div>
 

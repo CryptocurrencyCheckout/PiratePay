@@ -26,7 +26,7 @@
                     @endif
                 @else
                     <li class="nav-item">
-                        <a href="/dashboard" class="btn btn-secondary active">@lang('dashboard.dashboard')</a>
+                        <a href="/dashboard" class="btn btn-secondary active">@lang('dashboard.navbar_dashboard')</a>
                     </li>
                 @endguest
 

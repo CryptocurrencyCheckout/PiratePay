@@ -27,8 +27,12 @@
                     <a class="nav-link" href="/dashboard/logs">@lang('dashboard.navbar_logs')</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/horizon">@lang('dashboard.navbar_horizon')</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/dashboard/settings">@lang('dashboard.navbar_settings')</a>
                 </li>
+
 
             </ul>
 

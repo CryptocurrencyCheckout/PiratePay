@@ -16,6 +16,7 @@ return [
     'navbar_login' => 'Login',
     'navbar_logout' => 'Logout',
     'navbar_dashboard' => 'Dashboard',
+    'navbar_horizon' => 'Queue',
 
     'navbar_transactions' => 'Transactions',
     'navbar_apikeys' => 'API Keys',

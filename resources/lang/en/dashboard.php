@@ -13,6 +13,8 @@ return [
     |
     */
 
+    'error' => 'Error!',
+
     'navbar_login' => 'Login',
     'navbar_logout' => 'Logout',
     'navbar_dashboard' => 'Dashboard',
@@ -21,7 +23,9 @@ return [
     'navbar_transactions' => 'Transactions',
     'navbar_apikeys' => 'API Keys',
     'navbar_logs' => 'Logs',
+    'navbar_wallet' => 'Wallet',
     'navbar_settings' => 'Settings',
+
 
     'transmitted' => 'Transmitted:',
     'transmitted_yes' => 'Yes',
@@ -66,6 +70,29 @@ return [
     'your_api_keys' => 'Your API Keys:',
     'your_settings' => 'Your Settings:',
 
+    'wallet_header' => 'ARRR Wallet Details:',
+    'wallet_status_header' => 'Current Wallet Status:',
+
+    'wallet_blockheight_header' => 'ARRR BlockChain Block Height:',
+    'wallet_blockheight_current' => 'Wallet Block Height:',
+    'wallet_blockheight_found' => 'Highest Block Found:',
+    'wallet_blockheight_explorer' => 'Explorer Block Height:',
+
+    'wallet_blockheight_match' => 'The Blockchain Block-Height appears to match across the board, Therefore the Wallet seems to be running correctly.',
+    'wallet_blockheight_mismatch' => 'The Blockchain Block Heights Appear to be mismatch, if they differ by more than a few blocks there may be an issue with the wallet.',
+    
+    'wallet_blockheight_noresponse' => 'Was not able to get the Block Height from the Wallet. Check error logs for more details.',
+    'explorer_blockheight_noresponse' => 'Was not able to get the Block Height from the ARRR Block Explorer. Check error logs for more details.',
+    
+    'wallet_version_header' => 'Current Wallet Version:',
+    'wallet_version_name' => 'Wallet Name:',
+    'wallet_version_kmd' => 'KMD Version:',
+    'wallet_version_wallet' => 'Wallet Version:',
+
+    'wallet_balance_header' => 'ARRR Wallet Balance:',
+    'wallet_balance_transparent' => 'Transparent Wallet Balance:',
+    'wallet_balance_private' => 'Private Wallet Balance:',
+    'wallet_balance_total' => 'Total Wallet Balance:',
 
 
 

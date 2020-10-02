@@ -26,12 +26,10 @@ Route::get('/dashboard/logs', 'DashboardController@logs')->name('Error Logs');
 
 Route::get('/dashboard/settings', 'SettingController@index')->name('settings');
 
+Route::get('/dashboard/wallet', 'WalletController@dashboard')->name('wallet');
+
 Route::post('/dashboard/settings', 'SettingController@update');
 
 Route::get('/dashboard/transaction/{id}', 'DashboardController@transaction')->name('transaction details');
 
 Route::get('dashboard/api_token', 'DashboardController@api_token');
-  
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');

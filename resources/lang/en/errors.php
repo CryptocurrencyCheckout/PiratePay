@@ -13,8 +13,12 @@ return [
     |
     */
 
+    'wallet_error_getbalance_no_response' => 'Wallet Response = No response from wallet while attempting to get wallet balance. Something is wrong with the wallet. Try Restarting the wallet, Resync the Blockchain, or Update Wallet Version.',
+    'wallet_error_getinfo_no_response' => 'Wallet Response = No response from wallet while attempting to get wallet info. Something is wrong with the wallet. Try Restarting the wallet, Resync the Blockchain, or Update Wallet Version.',
     'wallet_error_address_no_response' => 'Wallet Response = No response from wallet while attempting to generate an address. Something is wrong with the wallet. Try Restarting the wallet, Resync the Blockchain, or Update Wallet Version.',
     'wallet_error_balance_no_response' => 'Wallet Response = No response from wallet while attempting to get wallet balance. Something is wrong with the wallet. Try Restarting the wallet, Resync the Blockchain, or Update Wallet Version.',
+
+    'explorer_error_getinfo_no_response' => 'Explorer Response = No response from Explorer while attempting to get block info. Something is wrong with the ARRR Explorer. Wait for it to resolve, or contact ARRR team to notify them their block explorer is down.',
 
     'api_error_missing_fields' => 'API Response = Some required fields were missing during API Call. Required Fields: store_currency, store_order_id, store_order_price, store_buyer_name, store_buyer_email.',
 
@@ -26,6 +30,8 @@ return [
     'woocommerce_error_settings_missing' => 'Woocommerce Response = Some of the Woocommerce settings inside PiratePay appear to not be set.',
     'woocommerce_error_values_missing' => 'Woocommerce Response = Cannot Update Order, Transaction Values appear to be missing. This could happen if the queue was cleared before completing.',
     'woocommerce_error_note_failed' => 'Woocommerce Response = Cannot Update Woocommerce Order Note, Was unable to find/edit the note attached to the order.',
+
+    'decryption_error_failed' => 'Decryption Response = PiratePay was unable to Decrypt the api keys, this decryption error could be if the platforms encryption keys were updated/changed/deleted, or if they were never created during installation.',
 
     'decryption_error_failed' => 'Decryption Response = PiratePay was unable to Decrypt the api keys, this decryption error could be if the platforms encryption keys were updated/changed/deleted, or if they were never created during installation.',
 ];

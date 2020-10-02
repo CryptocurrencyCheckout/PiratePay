@@ -24,15 +24,17 @@
                     <a class="nav-link" href="/dashboard/api_token">@lang('dashboard.navbar_apikeys')</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard/logs">@lang('dashboard.navbar_logs')</a>
+                    <a class="nav-link" href="/dashboard/wallet">@lang('dashboard.navbar_wallet')</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/horizon">@lang('dashboard.navbar_horizon')</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/logs">@lang('dashboard.navbar_logs')</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/dashboard/settings">@lang('dashboard.navbar_settings')</a>
                 </li>
-
 
             </ul>
 

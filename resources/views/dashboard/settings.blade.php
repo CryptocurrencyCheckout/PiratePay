@@ -52,6 +52,45 @@
         </div>
     </div>
     <!--End Card Body Content-->
+
+        <!--Card Body Content-->
+        <div class="card mt-4">
+            <div class="card-header">
+                @lang('dashboard.your_plugin_settings')
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <p class="font-weight-bold">PiratePay API URL:</p>
+                    </div>
+                    <div class="col">
+                        <p id="StoreID">{!! url('/api'); !!}</p>
+                    </div>
+                    <div class="col">
+                        <button class="btn float-right btn-outline-primary" data-clipboard-target="#StoreID" type="button"><i class="fa fa-copy"></i> Copy Details</button>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col">
+                        <p class="font-weight-bold">PiratePay API Key:</p>
+                    </div>
+                    <div class="col">
+                        <p id="StoreID"><a href='{!! url('/dashboard/api_token'); !!}'>Generate API Key Here...</a></p>
+                    </div>
+                    <div class="col">
+                        
+                    </div>
+                </div>
+
+                <hr>
+                
+            </div>
+        </div>
+        <!--End Card Body Content-->
  
 </div>
 <!-- End Main Card Body-->

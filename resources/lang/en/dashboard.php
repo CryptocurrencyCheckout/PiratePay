@@ -68,7 +68,8 @@ return [
     'transaction_status_not_transmitted' => 'Transaction Not Transmitted',
 
     'your_api_keys' => 'Your API Keys:',
-    'your_settings' => 'Your Settings:',
+    'your_settings' => 'Your Stores Settings:',
+    'your_plugin_settings' => 'Settings Required for Plugin:',
 
     'wallet_header' => 'ARRR Wallet Details:',
     'wallet_status_header' => 'Current Wallet Status:',
@@ -93,6 +94,8 @@ return [
     'wallet_balance_transparent' => 'Transparent Wallet Balance:',
     'wallet_balance_private' => 'Private Wallet Balance:',
     'wallet_balance_total' => 'Total Wallet Balance:',
+
+    'wallet_test_button' => 'Test an ARRR Transaction',
 
 
 

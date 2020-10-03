@@ -64,6 +64,47 @@ class WalletController extends Controller
     }
 
 
+        /**
+     * Show the application wallet Dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function testTransaction()
+    {
+
+        $response = Http::withHeaders([
+            'Accept'        => 'application/json',
+            'Content-Type' => 'application/json',
+
+        ])->withOptions([
+            'verify' => false,
+
+        ])->get(url('/api'), [
+            'store_order_price' => '0.01',
+            'store_order_id' => '12345',
+            'store_currency' => 'usd',
+            'store_buyer_name' => 'John Doe',
+            'store_buyer_email' => 'Cerbix@gmail.com',
+
+        ]);
+
+        $response;
+
+        if ($response->successful()){
+
+            return $response->json();
+
+        } else {
+
+            return 'Error!';
+            
+        }
+        
+
+        
+    }
+
+
 
     /**
      * Show the application wallet Dashboard.

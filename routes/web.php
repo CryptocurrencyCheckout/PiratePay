@@ -33,3 +33,5 @@ Route::post('/dashboard/settings', 'SettingController@update');
 Route::get('/dashboard/transaction/{id}', 'DashboardController@transaction')->name('transaction details');
 
 Route::get('dashboard/api_token', 'DashboardController@api_token');
+
+Route::get('demo', 'WalletController@testTransaction');

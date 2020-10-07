@@ -21,6 +21,20 @@ use Storage;
 
 class PirateController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        
+        $this->middleware('auth:api');
+
+    }
+
+
     /**
      * Display a listing of the resource.
      *

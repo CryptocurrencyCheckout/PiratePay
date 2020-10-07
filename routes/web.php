@@ -18,8 +18,6 @@ Route::get('/', 'HomeController@index')->name('Home');
 Auth::routes();
 Route::post('register', 'Auth\RegisterController@register')->middleware('maxadmin');
 
-Route::get('/api', 'API\PirateController@index');
-
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 Route::get('/dashboard/logs', 'DashboardController@logs')->name('Error Logs');

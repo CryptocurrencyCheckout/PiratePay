@@ -92,74 +92,110 @@ class PirateController extends Controller
 
         } else {
 
-            $crypto_address = $this->getAddress();
+            if (Transaction::where('store_order_id', '=', $store_order_id)->where('store_order_price', '=', $store_order_price)->where('store_buyer_email', '=', $store_buyer_email)->count() > 0) {
 
-            if (empty($crypto_address)){
-
-                Storage::append( 'WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_address_no_response') );
+                $transaction = Transaction::where('store_order_id', '=', $store_order_id)
+                    ->where('store_order_price', '=', $store_order_price)
+                    ->where('store_buyer_email', '=', $store_buyer_email)
+                    ->first();
+          
+                Storage::append( 'ApiErrors.log', Carbon::now() . ' ' . __('errors.api_error_transaction_exists') );
 
                 $error = new Error;
-                $error->code = '503';
-                $error->error = __('errors.wallet_error_address_no_response');
+                $error->code = '200';
+                $error->error = __('errors.api_error_transaction_exists');
                 $error->save();
 
-                return response()->json(
-                    ['error' => __('errors.wallet_error_address_no_response')],
-                    503
-                );
-    
-            } else {
 
-                $start_balance = $this->getBalance($crypto_address);
+                if ($transaction->status === 1){
 
-                if (isset($start_balance)){
+                    Storage::append( 'QueueErrors.log', Carbon::now() . ' ' . __('errors.queue_error_transaction_paid') );
 
-                    $crypto_market_price = $this->getMarketPrice();
-                    $crypto_conversion = $store_order_price / $crypto_market_price;
-                    $crypto_price = number_format($crypto_conversion, 6, '.', '');
-                    
-        
-                    $data = [];
-                    $data['crypto_address'] = $crypto_address;
-                    $data['start_balance'] = $start_balance;
-    
-                    $data['crypto_market_price'] = $crypto_market_price;
-                    $data['crypto_price'] = $crypto_price;
-                    
-                    $data['store_currency'] = $store_currency;
-                    $data['store_order_id'] = $store_order_id;
-                    $data['store_order_price'] = $store_order_price;
-                    $data['store_buyer_name'] = $store_buyer_name;
-                    $data['store_buyer_email'] = $store_buyer_email;
-                    
-                    $transaction = $this->writeDatabase($data);
-
-                    CheckWallet::dispatch($transaction)->delay(now()->addMinutes(1));
-                    
-                    return new AddressResource($transaction);
+                    $error = new Error;
+                    $error->code = '200';
+                    $error->error = __('errors.queue_error_transaction_paid');
+                    $error->save();
 
                 } else {
 
-                    Storage::append( 'WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_balance_no_response') );
-
-                    $error = new Error;
-                    $error->code = '503';
-                    $error->error = __('errors.wallet_error_balance_no_response');
-                    $error->save();
-
-                    return response()->json(
-                        ['error' => __('errors.wallet_error_balance_no_response')],
-                        503
-                    );
+                    CheckWallet::dispatch($transaction)->delay(now()->addMinutes(1));
 
                 }
-                
+
+                return new AddressResource($transaction);
+
+
+            } else {
+
+                $crypto_address = $this->getAddress();
+
+                if (empty($crypto_address)){
+    
+                    Storage::append( 'WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_address_no_response') );
+    
+                    $error = new Error;
+                    $error->code = '503';
+                    $error->error = __('errors.wallet_error_address_no_response');
+                    $error->save();
+    
+                    return response()->json(
+                        ['error' => __('errors.wallet_error_address_no_response')],
+                        503
+                    );
+        
+                } else {
+    
+                    $start_balance = $this->getBalance($crypto_address);
+    
+                    if (isset($start_balance)){
+    
+                        $crypto_market_price = $this->getMarketPrice();
+                        $crypto_conversion = $store_order_price / $crypto_market_price;
+                        $crypto_price = number_format($crypto_conversion, 6, '.', '');
+                        
+            
+                        $data = [];
+                        $data['crypto_address'] = $crypto_address;
+                        $data['start_balance'] = $start_balance;
+        
+                        $data['crypto_market_price'] = $crypto_market_price;
+                        $data['crypto_price'] = $crypto_price;
+                        
+                        $data['store_currency'] = $store_currency;
+                        $data['store_order_id'] = $store_order_id;
+                        $data['store_order_price'] = $store_order_price;
+                        $data['store_buyer_name'] = $store_buyer_name;
+                        $data['store_buyer_email'] = $store_buyer_email;
+                        
+                        $transaction = $this->writeDatabase($data);
+    
+                        CheckWallet::dispatch($transaction)->delay(now()->addMinutes(1));
+                        
+                        return new AddressResource($transaction);
+    
+                    } else {
+    
+                        Storage::append( 'WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_balance_no_response') );
+    
+                        $error = new Error;
+                        $error->code = '503';
+                        $error->error = __('errors.wallet_error_balance_no_response');
+                        $error->save();
+    
+                        return response()->json(
+                            ['error' => __('errors.wallet_error_balance_no_response')],
+                            503
+                        );
+    
+                    }
+                    
+                }
+
             }
 
         }
 
     }
-
 
     /**
      * Store a newly created resource in storage.

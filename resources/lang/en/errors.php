@@ -21,6 +21,9 @@ return [
     'explorer_error_getinfo_no_response' => 'Explorer Response = No response from Explorer while attempting to get block info. Something is wrong with the ARRR Explorer. Wait for it to resolve, or contact ARRR team to notify them their block explorer is down.',
 
     'api_error_missing_fields' => 'API Response = Some required fields were missing during API Call. Required Fields: store_currency, store_order_id, store_order_price, store_buyer_name, store_buyer_email.',
+    'api_error_transaction_exists' => 'API Response = Transaction already exists, providing previously generated ARRR address to customer. This will also happen once per order if Email Fallback is enabled inside plugin.',
+    
+    'queue_error_transaction_paid' => 'Queue Response = Transaction was already found and marked as paid. Additional Wallet Scans Prevented.',
 
     'wallet_check_not_found' => 'Wallet Check Response = Unable to locate the transaction after several attempts.',
 

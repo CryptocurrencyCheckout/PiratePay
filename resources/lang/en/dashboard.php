@@ -35,9 +35,12 @@ return [
     'status_found' => 'Found',
     'status_pending' => 'Pending',
     'status_missing' => 'Missing',
+    'status_overpaid' => 'Overpaid',
+    'status_underpaid' => 'Underpaid',
     'status_unknown' => 'Unknown',
 
-    'crypto_amount' => 'Crypto Amount:',
+    'crypto_amount' => 'Expected ARRR:',
+    'crypto_received' => 'Received ARRR:',
     'receive_address' => 'Generated Receive Address:',
 
     'store_order_price' => 'Order Price:',
@@ -58,11 +61,14 @@ return [
 
     'transaction_expected_crypto' => 'Expected ARRR:',
     'transaction_received_crypto' => 'Received ARRR:',
+    'transaction_percent_crypto' => 'Received %:',
 
     'transaction_status_found' => 'Transaction Found',
     'transaction_status_missing' => 'Transaction Missing',
     'transaction_status_pending' => 'Transaction Pending',
     'transaction_status_unknown' => 'Transaction Unknown',
+    'transaction_status_overpaid' => 'Transaction Overpaid',
+    'transaction_status_underpaid' => 'Transaction Underpaid',
 
     'transaction_status_transmitted' => 'Transaction Transmitted',
     'transaction_status_not_transmitted' => 'Transaction Not Transmitted',

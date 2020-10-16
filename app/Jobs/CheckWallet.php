@@ -20,7 +20,7 @@ class CheckWallet implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $transaction;
+    public $transaction, $requiredConfirmations, $maximumChecks, $minutesBetweenChecks, $requiredAccuracy;
 
     /**
      * Create a new job instance.
@@ -30,6 +30,13 @@ class CheckWallet implements ShouldQueue
     public function __construct($transaction)
     {
         $this->transaction = $transaction;
+
+        $this->requiredConfirmations = env('SCAN_REQUIRED_CONFIRMATIONS', 1);
+        $this->requiredAccuracy = env('SCAN_REQUIRED_ACCURACY', 98);
+
+        $this->minutesBetweenChecks = env('SCAN_MINUTES_BETWEEN', 5);
+        $this->maximumChecks = env('SCAN_MAX_ATTEMPTS', 36);
+
     }
 
     /**
@@ -38,18 +45,14 @@ class CheckWallet implements ShouldQueue
      * @return void
      */
     public function handle()
-    {
+    {  
 
-        $requiredAccuracy = 90;
-        $maximumChecks = 36;
-        $minutesBetweenChecks = 5;
-        
         $walletChecks = Transaction::find($this->transaction['id']);
 
 
-        if ( $walletChecks->wallet_checks >= $maximumChecks){
+        if ( $walletChecks->wallet_checks >= $this->maximumChecks){
 
-            Storage::append('WalletCheck.log', Carbon::now() . ' ' . __('errors.wallet_check_not_found') . ' Order ID: ' . $this->transaction['order_id'] . '  Attempts: ' . $maximumChecks);
+            Storage::append('WalletCheck.log', Carbon::now() . ' ' . __('errors.wallet_check_not_found') . ' Order ID: ' . $this->transaction['store_order_id'] . '  Attempts: ' . $this->maximumChecks);
 
             $checkWallet = Transaction::find($this->transaction['id']);
             $checkWallet->status = 2;
@@ -74,15 +77,18 @@ class CheckWallet implements ShouldQueue
                     $checkWallet->end_balance = $endBalance;
                     $checkWallet->save();
 
-                    CheckWallet::dispatch($checkWallet)->delay(now()->addminutes($minutesBetweenChecks));
+                    CheckWallet::dispatch($checkWallet)->delay(now()->addminutes($this->minutesBetweenChecks));
 
                 } else {
 
+                    $expectedTotal = $this->transaction['start_balance'] + $this->transaction['crypto_expected'];
+                    $percentRecieved = ($endBalance - $this->transaction['start_balance']) / $this->transaction['crypto_expected'] * 100;
+
                     $remainingBalance = $endBalance - $this->transaction['start_balance'];
                     $percentageDifference = ($remainingBalance - $this->transaction['crypto_expected']) / $this->transaction['crypto_expected'] * 100;
-                    $percentAccurate = 100 - abs($percentageDifference);
+                    $percentAccurate = 100 - abs($percentageDifference); 
 
-                    if ($percentAccurate >= $requiredAccuracy){
+                    if ($percentAccurate >= $this->requiredAccuracy){
 
                         $checkWallet = Transaction::find($this->transaction['id']);
                         $checkWallet->end_balance = $endBalance;
@@ -92,6 +98,51 @@ class CheckWallet implements ShouldQueue
                         $checkWallet->save();
 
                         UpdateWoocommerce::dispatch($checkWallet)->delay(now()->addminutes(1));
+
+                    } elseif ($endBalance >= $expectedTotal) {
+
+                        $checkWallet = Transaction::find($this->transaction['id']);
+                        $checkWallet->end_balance = $endBalance;
+                        $checkWallet->crypto_received = $remainingBalance;
+                        $checkWallet->crypto_percent = $percentRecieved;
+                        $checkWallet->status = 3;
+                        $checkWallet->save();
+
+                        UpdateWoocommerce::dispatch($checkWallet)->delay(now()->addminutes(1));
+
+                    } else {
+
+                        if ( $walletChecks->status == 4){
+
+                            $checkWallet = Transaction::find($this->transaction['id']);
+                            $checkWallet->wallet_checks = $this->transaction['wallet_checks'] + '1';
+                            $checkWallet->end_balance = $endBalance;
+                            $checkWallet->crypto_received = $remainingBalance;
+                            $checkWallet->crypto_percent = $percentRecieved;
+                            $checkWallet->save();
+
+                            CheckWallet::dispatch($checkWallet)->delay(now()->addminutes($this->minutesBetweenChecks));
+
+                        } else {
+
+                            Storage::append('WalletCheck.log', Carbon::now() . ' ' . __('errors.wallet_check_underpaid') . ' Order ID: ' . $this->transaction['store_order_id'] . ' Received: ' . $this->transaction['crypto_received'] . ' Expected: ' . $this->transaction['crypto_expected']);
+
+                            $error = new Error;
+                            $error->code = '402';
+                            $error->error = __('errors.wallet_check_underpaid');
+                            $error->save();
+    
+                            $checkWallet = Transaction::find($this->transaction['id']);
+                            $checkWallet->wallet_checks = $this->transaction['wallet_checks'] + '1';
+                            $checkWallet->end_balance = $endBalance;
+                            $checkWallet->crypto_received = $remainingBalance;
+                            $checkWallet->crypto_percent = $percentRecieved;
+                            $checkWallet->status = 4;
+                            $checkWallet->save();
+    
+                            CheckWallet::dispatch($checkWallet)->delay(now()->addminutes($this->minutesBetweenChecks));
+
+                        }
 
                     }
 
@@ -127,7 +178,7 @@ class CheckWallet implements ShouldQueue
         try {
 
             $pirateRPC = bitcoind()->client('pirate');
-            $z_balance = $pirateRPC->z_getbalance($this->transaction['crypto_address']);
+            $z_balance = $pirateRPC->z_getbalance($this->transaction['crypto_address'], $this->requiredConfirmations);
             
             return $z_balance->get();
 

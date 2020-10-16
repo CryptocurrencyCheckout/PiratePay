@@ -45,6 +45,11 @@
                                                         </div>
 
                                                         <div class="col-12 col-xl-1">
+                                                                <b>@lang('dashboard.crypto_received')</b><br>
+                                                                {{$transaction->crypto_received}}
+                                                        </div>
+
+                                                        <div class="col-12 col-xl-1">
                                                                 <b>@lang('dashboard.status')</b><br>
 
                                                                 @if ( $transaction->status == 0)
@@ -53,6 +58,10 @@
                                                                         <span style="color:green">@lang('dashboard.status_found')</span>
                                                                 @elseif ( $transaction->status == 2 )
                                                                         <span style="color:red">@lang('dashboard.status_missing')</span>
+                                                                @elseif ( $transaction->status == 3 )
+                                                                        <span style="color:blue">@lang('dashboard.status_overpaid')</span>
+                                                                @elseif ( $transaction->status == 4 )
+                                                                        <span style="color:red">@lang('dashboard.status_underpaid')</span>
                                                                 @else
                                                                         <span style="color:black">@lang('dashboard.status_unknown')</span>
                                                                 @endif

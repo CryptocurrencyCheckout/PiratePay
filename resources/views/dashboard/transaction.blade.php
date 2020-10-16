@@ -108,6 +108,7 @@
                         <tr>
                             <th>@lang('dashboard.transaction_expected_crypto')</th>
                             <th>@lang('dashboard.transaction_received_crypto')</th>
+                            <th>@lang('dashboard.transaction_percent_crypto')</th>
                         </tr>
 
                     </thead>
@@ -117,6 +118,7 @@
                             <tr>
                                 <td>{{$transaction->crypto_expected}}</td>
                                 <td>{{$transaction->crypto_received}}</td>
+                                <td>{{ number_format($transaction->crypto_percent, 4)}} %</td>
                             </tr>
                         
                     </tbody>
@@ -144,6 +146,10 @@
                     <h4><span style="color:green">@lang('dashboard.transaction_status_found')</span></h4>
                 @elseif ( $transaction->status == 2 )
                     <h4><span style="color:red">@lang('dashboard.transaction_status_missing')</span></h4>
+                @elseif ( $transaction->status == 3 )
+                    <h4><span style="color:blue">@lang('dashboard.transaction_status_overpaid')</span></h4>
+                @elseif ( $transaction->status == 4 )
+                    <h4><span style="color:red">@lang('dashboard.transaction_status_underpaid')</span></h4>
                 @else
                     <h4><span style="color:black">@lang('dashboard.transaction_status_unknown')</span></h4>
                 @endif

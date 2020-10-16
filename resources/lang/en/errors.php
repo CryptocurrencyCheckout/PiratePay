@@ -26,6 +26,7 @@ return [
     'queue_error_transaction_paid' => 'Queue Response = Transaction was already found and marked as paid. Additional Wallet Scans Prevented.',
 
     'wallet_check_not_found' => 'Wallet Check Response = Unable to locate the transaction after several attempts.',
+    'wallet_check_underpaid' => 'Wallet Check Response = Transaction found, but the amount received was not enough to finalize the order. Will keep scanning wallet for more transactions.',
 
     'woocommerce_error_bad_orderid' => 'Woocommerce Response = Woocommerce indicated that it could not find the order ID, this error could indicate that the order was deleted, did not go through, or the wrong value was received.',
     'woocommerce_error_bad_client_request' => 'Woocommerce Response = 400 Bad Response. This could be caused by incorrect API link, wrong client credentials, or incorrect/missing Order ID.',

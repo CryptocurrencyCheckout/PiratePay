@@ -235,7 +235,7 @@ class PirateController extends Controller
         try {
 
             $pirateRPC = bitcoind()->client('pirate');
-            $z_balance = $pirateRPC->z_getbalance($crypto_address);
+            $z_balance = $pirateRPC->z_getbalance($crypto_address, 1);
             
             return $z_balance->get();
 

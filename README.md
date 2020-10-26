@@ -48,18 +48,21 @@ This framework implements several of the latest web and security features such a
 
 
 **What if an attacker gets my Oauth Token/Keys?:**
+
 Although it can cause some annoyance, your coins will not be at risk if your access token gets compromised.
 The API is designed to only perform tasks that are vital/necessary for the store checkout process, such as generating an address, receiving coins, and scanning if those coins have arrived.
-The API does not allow coins to be moved or withdrawn from the wallet. Meaning the worst thing an attacker with your keys can do, is generate unneeded addresses, or send funds/coins to your wallet.
+The API does not allow coins to be moved or withdrawn from the wallet. Meaning the worst thing an attacker with your keys can do, is generate unneeded addresses, or pay funds/coins to your wallet.
 
 
 **What if an attacker gets my Dashboard Login/Password?:**
+
 Although the admin dashboard does provide some transaction details about your websites/stores orders, access to the dashboard does not pose a security risk to your coins.
 This is because the PiratePay dashboard is designed only to provide details necessary to understand which transactions you have and have not received, as well as enough information to monitor PiratePay.
 Your Coins cannot be moved/withdrawn from the admin dashboard.
 
 
 **What if the attacker gains root access to the server backend?:**
+
 Unfortunately this is the one situation where your coins could be at risk, as the attacker will be behind PiratePay and have direct access to the wallet.
 However there are many methods you can use to prevent this from happening, such as closing all access to FTP and SSH ports when not accessing/working on the server.
 Or even making it so only whitelisted IP Addresses can access the server backend through SSH/FTP. (affectively banning the rest of the world from even attempting to login.)

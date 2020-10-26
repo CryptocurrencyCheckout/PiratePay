@@ -64,8 +64,10 @@ Your Coins cannot be moved/withdrawn from the admin dashboard.
 **What if the attacker gains root access to the server backend?:**
 
 Unfortunately this is the one situation where your coins could be at risk, as the attacker will be behind PiratePay and have direct access to the wallet.
+
 However there are many methods you can use to prevent this from happening, such as closing all access to FTP and SSH ports when not accessing/working on the server.
 Or even making it so only whitelisted IP Addresses can access the server backend through SSH/FTP. (affectively banning the rest of the world from even attempting to login.)
+
 Other recommended and effective ways to protect your server is using an SSH RSA Key Pair, and Password combination. (Requiring both Keys and a Password to login to the server.) Or other reliable forms of Two-Factor Authentication.
 
 

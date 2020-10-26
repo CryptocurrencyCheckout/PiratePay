@@ -25,12 +25,13 @@ Even if done perfectly several other attack vectors remain, such as wallet brute
 DDOS attacks that can cause mass inconvenience if your store loses the ability to communicate with the wallet. Either leaving your customer with no way to pay, or breaking your checkout process entirely.
 
 The same issue remains, if your wallet is publicly accessible, with enough time, effort and skills it can be compromised.
-Standard Wallet JSON-RPC Servers simply do not employ enough security features to provide a high level of security.
+Standard Wallet JSON-RPC Servers simply do not employ enough security features to provide a high level of security to protect your coins.
 
 
 ## So what makes PiratePay more Secure?
 
 The concept behind PiratePay is simple, remove the public facing wallet and all ability to communicate directly with the wallet from the outside world.
+
 PiratePay works by placing a framework in front of the wallet, think of this framework as a protective barrier that is filtering all communication between the outside world and your wallet.
 Keeping all communication with the wallet done within the internal private network. (Localhost, ie 127.0.0.1)
 

@@ -71,7 +71,7 @@ Other recommended and effective ways to protect your server is using an SSH RSA 
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within PiratePay, please send an e-mail to CryptocurrencyCheckout via [support@cryptocurrencycheckout.com](mailto:support@cryptocurrencycheckout.com). All security vulnerabilities will be investigated and addressed.
+If you discover a security vulnerability within PiratePay, please send an e-mail to CryptocurrencyCheckout via [piratepay@cryptocurrencycheckout.com](mailto:piratepay@cryptocurrencycheckout.com). All security vulnerabilities will be investigated and addressed in a timely manner.
 
 
 ## License

@@ -5,6 +5,12 @@
 PiratePay is a open source web application that makes accepting ARRR (PirateChain) on your store or website easier and more secure.
 This is done by putting your ARRR wallet behind a RESTful API, Oauth2 authentication
 
+## More Details.
+
+More details to come.
+If you have any questions please contact !Ratstang CryptocurrencyCheckout#4037 on the ARRR Discord, or by the email below.
+
+
 
 ## Why Publicly Facing Wallet Servers is Bad.
 

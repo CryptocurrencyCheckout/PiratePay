@@ -1,61 +1,69 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/CryptocurrencyCheckout/PiratePay/master/public/img/PiratePayShipLogo.png" width="400"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## About PiratePay
 
-## About Laravel
+PiratePay is a open source web application that makes accepting ARRR (PirateChain) on your store or website easier and more secure.
+This is done by putting your ARRR wallet behind a RESTful API, Oauth2 authentication
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Why Publicly Facing Wallet Servers is Bad.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Having a publicly accessible Wallet JSON-RPC Server can have significant security risks when it comes to your coins/funds.
+This is because in order for your website/store to communicate with the remote wallet it must pass the RPC Username & Password details to the Wallet Server.
+These details can be easily intercepted by an experienced attacker, giving the attacker full access to do as they please with your wallet, Including withdrawing/stealing your coins.
 
-## Learning Laravel
+Although this risk can be partially negated with proper server to server encryption, this adds additional complexity, difficulty, and effort on the admins part. (Which costs time/money.)
+Even if done perfectly several other attack vectors remain, such as wallet brute force attacks where bots/scripts can make millions, or even billions of attempts to crack your Wallet RPC login details remotely.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+DDOS attacks that can cause mass inconvenience if your store loses the ability to communicate with the wallet. Either leaving your customer with no way to pay, or breaking your checkout process entirely.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The same issue remains, if your wallet is publicly accessible, with enough time, effort and skills it can be compromised.
+Standard Wallet JSON-RPC Servers simply do not employ enough security features to provide a high level of security.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## So what makes PiratePay more Secure?
 
-### Premium Partners
+The concept behind PiratePay is simple, remove the public facing wallet and all ability to communicate directly with the wallet from the outside world.
+PiratePay works by placing a framework in front of the wallet, think of this framework as a protective barrier that is filtering all communication between the outside world and your wallet.
+Keeping all communication with the wallet done within the internal private network. (Localhost, ie 127.0.0.1)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+This framework implements several of the latest web and security features such as:
 
-## Contributing
+- JSON RESTful API.
+- OAuth 2.0 grant type and access tokens.
+- Protection against XSS (Cross Site Scripting)
+- Protection against SQL Injection.
+- Protection against CSRF (Cross Site Request Forgery.)
+- Login Throttling (Prevents too many login attempts.)
+- X-Rate limiting (Limits how many requests an ip address can make to the server in a given time.)
+- GET/POST Purification. (Filters out attempts to inject malicious code when communicating with server.)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+**What if an attacker gets my Oauth Token/Keys?:**
+Although it can cause some annoyance, your coins will not be at risk if your access token gets compromised.
+The API is designed to only perform tasks that are vital/neccesary for the store checkout process, such as generating an address, receiving coins, and scanning if those coins have arrived.
+The API does not allow coins to be moved or withdrawn from the wallet. Meaning the worst thing an attacker with your keys can do, is generate unneeded addresses, or send funds/coins to your wallet.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+
+**What if an attacker gets my Dashboard Login/Password?:**
+Although the admin dashboard does provide some transaction details about your websites/stores orders, access to the dashboard does not pose a security risk to your coins.
+This is because the PiratePay dashboard is designed only to provide details neccesary to understand which transactions you have and have not received, as well as enough information to monitor PiratePay.
+Your Coins cannot be moved/withdrawn from the admin dashboard.
+
+
+**What if the attacker gains root access to the server backend?:**
+Unfortunately this is the one situation where your coins could be at risk, as the attacker will be behind PiratePay and have direct access to the wallet.
+However there are many methods you can use to prevent this from happening, such as closing all access to FTP and SSH ports when not accessing/working on the server.
+Or even making it so only whitelisted IP Addresses can access the server backend through SSH/FTP. (affectively banning the rest of the world from even attempting to login.)
+Other recommended and effective ways to protect your server is using an SSH RSA Key Pair, and Password combination. (Requring both Keys and a Password to login to the server.) Or other relaible forms of Two-Factor Authentication.
+
+
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within PiratePay, please send an e-mail to CryptocurrencyCheckout via [support@cryptocurrencycheckout.com](mailto:support@cryptocurrencycheckout.com). All security vulnerabilities will be investigated and addressed.
+
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+PiratePay is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

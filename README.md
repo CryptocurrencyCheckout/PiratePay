@@ -3,7 +3,8 @@
 ## About PiratePay
 
 PiratePay is a free open source web application that makes accepting ARRR (PirateChain) on your store or website easier and more secure.
-This is done by putting your ARRR wallet behind a feature rich RESTful API that offers a graphical Dashboard, price conversions, transaction records, a job queue manager to monitor your wallet transactions, API communication with your store, as well as additional security features, and Oauth2 authentication.
+
+This is done by putting your ARRR wallet behind a feature rich RESTful API that offers a graphical dashboard, price conversions, transaction records, additional security features, Oauth2 authentication, as well as a job queue manager designed to monitor your wallet transactions and communicate with your stores API to update your order payment statuses.
 
 
 ## More Details.

@@ -31,6 +31,7 @@ class PirateController extends Controller
     {
         
         $this->middleware('auth:api');
+        $this->middleware('throttle:50');
 
     }
 

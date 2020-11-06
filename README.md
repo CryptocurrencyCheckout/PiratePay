@@ -1,5 +1,9 @@
 <p align="center"><img src="https://raw.githubusercontent.com/CryptocurrencyCheckout/PiratePay/master/public/img/PiratePayShipLogo.png" width="450"></p>
 
+<p align="center">
+[![Build Status](https://travis-ci.org/CryptocurrencyCheckout/PiratePay.svg?branch=master)](https://travis-ci.org/CryptocurrencyCheckout/PiratePay)
+</p>
+
 ## About PiratePay
 
 PiratePay is a free open source web application that makes accepting ARRR (PirateChain) on your store or website easier and more secure.

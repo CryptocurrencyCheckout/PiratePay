@@ -1,8 +1,8 @@
 <p align="center"><img src="https://raw.githubusercontent.com/CryptocurrencyCheckout/PiratePay/master/public/img/PiratePayShipLogo.png" width="450"></p>
 
-==========
-
-[![Build Status](https://travis-ci.org/CryptocurrencyCheckout/PiratePay.svg?branch=master)](https://travis-ci.org/CryptocurrencyCheckout/PiratePay)
+<p align="center">
+<a href="https://travis-ci.org/github/CryptocurrencyCheckout/PiratePay"><img src="https://travis-ci.org/CryptocurrencyCheckout/PiratePay.svg?branch=master" alt="Build Status"></a>
+</p>
 
 
 ## About PiratePay

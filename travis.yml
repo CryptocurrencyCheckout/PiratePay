@@ -24,4 +24,3 @@ email:
         - piratepay@cryptocurrencycheckout.com
     on_success: always
     on_failure: always
-    

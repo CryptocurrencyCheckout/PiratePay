@@ -19,9 +19,8 @@ script:
     - vendor/bin/phpunit
 
 notifications:
-
 email:
     recipients:
-        - piratepay@cryptocurrencycheckout.com
+        - admin@cryptocurrencycheckout.com
     on_success: always
     on_failure: always

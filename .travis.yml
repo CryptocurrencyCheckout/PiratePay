@@ -19,6 +19,7 @@ script:
     - vendor/bin/phpunit
 
 notifications:
+
 email:
     recipients:
         - piratepay@cryptocurrencycheckout.com

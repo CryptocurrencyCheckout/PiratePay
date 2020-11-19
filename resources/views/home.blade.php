@@ -16,17 +16,20 @@
                         <div class="row h3 pt-3">
                             
                             <div class="col">
-                                <button type="button" class="btn btn-dark btn-lg">Pirate</button>
-                                {{-- <a href="https://pirate.black/">Pirate</a> --}}
+
+                                <a href="https://pirate.black/" target="_blank"><button type="button" class="btn btn-dark btn-lg">Pirate</button></a>
+
                             </div>
                             <div class="col">
-                                <button type="button" class="btn btn-dark btn-lg">Guides</button>
-                                {{-- <a href="https://laravel.com/docs">Guide</a> --}}
+                                
+                                <a href="https://cryptocurrencycheckout.com/guides/piratepay" target="_blank"><button type="button" class="btn btn-dark btn-lg">Guides</button></a>
+
                             </div>
 
                             <div class="col">
-                                <button type="button" class="btn btn-dark btn-lg">Github</button>
-                                {{-- <a href="https://laravel.com/docs">Github</a> --}}
+
+                                <a href="https://github.com/CryptocurrencyCheckout/PiratePay" target="_blank"><button type="button" class="btn btn-dark btn-lg">Github</button></a>
+
                             </div>
                         </div>
                                     

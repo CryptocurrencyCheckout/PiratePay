@@ -1,10 +1,12 @@
 {
-    "name": "laravel/laravel",
+    "name": "cryptocurrencycheckout/piratepay",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "The PiratePay Self-Hosted Payment Gateway for accepting PirateChain (ARRR)",
     "keywords": [
-        "framework",
-        "laravel"
+        "PiratePay",
+        "Payment Gateway",
+        "Accept PirateChain",
+        "ARRR"
     ],
     "license": "MIT",
     "require": {

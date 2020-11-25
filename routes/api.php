@@ -14,4 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/', 'API\PirateController@index');
+// API Version 1 Routes:
+Route::post('/v1/initiate', 'API\V1\PirateController@initiate');

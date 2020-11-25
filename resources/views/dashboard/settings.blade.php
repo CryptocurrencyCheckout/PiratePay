@@ -65,10 +65,10 @@
                         <p class="font-weight-bold">PiratePay API URL:</p>
                     </div>
                     <div class="col">
-                        <p id="StoreID">{!! url('/api'); !!}</p>
+                        <p id="StoreID">{!! url('/api/v1'); !!}</p>
                     </div>
                     <div class="col">
-                        <button class="btn float-right btn-outline-primary" data-clipboard-target="#StoreID" type="button"><i class="fa fa-copy"></i> Copy Details</button>
+                        {{-- <button class="btn float-right btn-outline-primary" data-clipboard-target="#StoreID" type="button"><i class="fa fa-copy"></i> Copy Details</button> --}}
                     </div>
                 </div>
 

@@ -33,3 +33,5 @@ Route::get('/dashboard/transaction/{id}', 'DashboardController@transaction')->na
 Route::get('dashboard/api_token', 'DashboardController@api_token');
 
 Route::get('demo', 'WalletController@testTransaction');
+
+Route::get('/docs', 'ApiDocsController@index')->name('API Documentation');

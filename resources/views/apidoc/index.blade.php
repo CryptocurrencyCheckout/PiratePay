@@ -47,8 +47,8 @@
       <div class="content">
           <!-- START_INFO -->
 <h1>Info</h1>
-<p>Welcome to the generated API reference.
-<a href="{{ route("apidoc.json") }}">Get Postman Collection</a></p>
+<p>Welcome to the PiratePay API Documentation.</p>
+{{-- <a href="{{ route("apidoc.json") }}">Get Postman Collection</a></p> --}}
 <!-- END_INFO -->
 <h1>Initiate Transaction</h1>
 <p>Initiate the Transaction Process by Generating a PirateChain Address, QR Code, and converting Market and Store Prices.</p>

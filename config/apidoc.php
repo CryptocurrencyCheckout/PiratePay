@@ -22,7 +22,7 @@ return [
          * Whether to automatically create a docs endpoint for you to view your generated docs.
          * If this is false, you can still set up routing manually.
          */
-        'autoload' => true,
+        'autoload' => false,
 
         /*
          * URL path to use for the docs endpoint (if `autoload` is true).

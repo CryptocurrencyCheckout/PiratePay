@@ -33,7 +33,7 @@
                             </div>
                             <div class="col">
 
-                                <a href="/doc" target="_blank"><button type="button" class="btn btn-dark btn-lg">API Docs</button></a>
+                                <a href="/documentation" target="_blank"><button type="button" class="btn btn-dark btn-lg">API Docs</button></a>
 
                             </div>
                         </div>

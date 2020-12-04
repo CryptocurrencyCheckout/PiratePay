@@ -18,6 +18,11 @@ use Exception;
 use Purifier;
 use Storage;
 
+/**
+ * @group Initiate Transaction
+ *
+ * Initiate the Transaction Process by Generating a PirateChain Address, QR Code, and converting Market and Store Prices.
+ */
 
 class PirateController extends Controller
 {
@@ -37,9 +42,28 @@ class PirateController extends Controller
 
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @bodyParam  store_order_id string required The Order ID or Order Number. Example: 9
+     * @bodyParam  store_order_price string required The Order Grand Total minus currency symbols. Example: 1.00
+     * @bodyParam  store_currency string required The FIAT currency abbreviation. Example: USD
+     * @bodyParam  store_buyer_name string required The name of customer. Example: John Doe
+     * @bodyParam  store_buyer_email string required The email address of the Customer. Example: test@test.com
+     * 
+     * @response  {
+     *   "data": {
+     *       "id": 10,
+     *       "store_order_id": "5",
+     *       "store_order_price": "0.01",
+     *       "store_buyer_name": "John Doe",
+     *       "store_buyer_email": "test@test.com",
+     *       "crypto_address": "zs1kmzcd8h22l8u38hnfdqfxegr0ml0nav9wfqcqpj3wapk8gury6gqlg4xf7gz4kakc4cfwq74xjl",
+     *       "crypto_market_price": "0.088339",
+     *       "crypto_price": "0.226401",
+     *       "start_balance": "0",
+     *       "crypto_qr": "https://chart.googleapis.com/chart?chs=300x300&chld=L|2&cht=qr&chl=pirate:zs1kmzcd8h22l8u38hnfdqfxegr0ml0nav9wfqcqpj3wapk8gury6gqlg4xf7gz4kakc4cfwq74xjl?amount=0.226401&message=16&label=16",
+     *       "created_at": "2020-11-26 11:36:06",
+     *       "updated_at": "2020-11-26 14:37:27"
+     *   }
+     * }
      */
     public function initiate(Request $request)
     {

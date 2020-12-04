@@ -1,0 +1,49 @@
+{
+    "variables": [],
+    "info": {
+        "name": "PiratePay API",
+        "_postman_id": "3097538a-5703-4bf9-8e39-32b71337b15c",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.0.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Initiate Transaction",
+            "description": "\nInitiate the Transaction Process by Generating a PirateChain Address, QR Code, and converting Market and Store Prices.",
+            "item": [
+                {
+                    "name": "api\/v1\/initiate",
+                    "request": {
+                        "url": {
+                            "protocol": "http",
+                            "host": "localhost",
+                            "path": "api\/v1\/initiate",
+                            "query": []
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {token}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"store_order_id\": \"9\",\n    \"store_order_price\": \"1.00\",\n    \"store_currency\": \"USD\",\n    \"store_buyer_name\": \"John Doe\",\n    \"store_buyer_email\": \"test@test.com\"\n}"
+                        },
+                        "description": "",
+                        "response": []
+                    }
+                }
+            ]
+        }
+    ]
+}

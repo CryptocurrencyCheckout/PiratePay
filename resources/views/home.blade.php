@@ -31,6 +31,11 @@
                                 <a href="https://github.com/CryptocurrencyCheckout/PiratePay" target="_blank"><button type="button" class="btn btn-dark btn-lg">Github</button></a>
 
                             </div>
+                            <div class="col">
+
+                                <a href="/doc" target="_blank"><button type="button" class="btn btn-dark btn-lg">API Docs</button></a>
+
+                            </div>
                         </div>
                                     
                     </div>

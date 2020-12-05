@@ -47,8 +47,7 @@
       <div class="content">
           <!-- START_INFO -->
 <h1>Info</h1>
-<p>Welcome to the PiratePay API Documentation.</p>
-{{-- <a href="{{ route("apidoc.json") }}">Get Postman Collection</a></p> --}}
+<p>Welcome to the generated API reference.</p>
 <!-- END_INFO -->
 <h1>Initiate Transaction</h1>
 <p>Initiate the Transaction Process by Generating a PirateChain Address, QR Code, and converting Market and Store Prices.</p>
@@ -58,14 +57,14 @@
 <p>Example request:</p>
 </blockquote>
 <pre><code class="language-bash">curl -X POST \
-    "http://localhost/api/v1/initiate" \
+    "{{ url('') }}/api/v1/initiate" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}" \
     -d '{"store_order_id":"9","store_order_price":"1.00","store_currency":"USD","store_buyer_name":"John Doe","store_buyer_email":"test@test.com"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/initiate"
+    "{{ url('') }}/api/v1/initiate"
 );
 
 let headers = {
@@ -92,7 +91,7 @@ fetch(url, {
 <pre><code class="language-php">
 $client = new \GuzzleHttp\Client();
 $response = $client-&gt;post(
-    'http://localhost/api/v1/initiate',
+    '{{ url('') }}/api/v1/initiate',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -113,7 +112,7 @@ print_r(json_decode((string) $body));</code></pre>
 <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost/api/v1/initiate'
+url = '{{ url('') }}/api/v1/initiate'
 payload = {
     "store_order_id": "9",
     "store_order_price": "1.00",

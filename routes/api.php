@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 // API Version 1 Routes:
 Route::post('/v1/initiate', 'API\V1\PirateController@initiate');
+Route::post('/v1/status', 'API\V1\StatusController@status');

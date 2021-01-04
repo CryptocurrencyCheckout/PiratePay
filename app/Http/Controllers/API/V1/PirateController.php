@@ -42,7 +42,7 @@ class PirateController extends Controller
 
 
     /**
-     * @bodyParam  store_order_id string required The Order ID or Order Number. Example: 9
+     * @bodyParam  store_order_id string required The Order ID or Order Number. Example: 5
      * @bodyParam  store_order_price string required The Order Grand Total minus currency symbols. Example: 1.00
      * @bodyParam  store_currency string required The FIAT currency abbreviation. Example: USD
      * @bodyParam  store_buyer_name string required The name of customer. Example: John Doe
@@ -52,7 +52,8 @@ class PirateController extends Controller
      *   "data": {
      *       "id": 10,
      *       "store_order_id": "5",
-     *       "store_order_price": "0.01",
+     *       "store_order_price": "1.00",
+     *       "store_currency": "USD",
      *       "store_buyer_name": "John Doe",
      *       "store_buyer_email": "test@test.com",
      *       "crypto_address": "zs1kmzcd8h22l8u38hnfdqfxegr0ml0nav9wfqcqpj3wapk8gury6gqlg4xf7gz4kakc4cfwq74xjl",
@@ -186,7 +187,7 @@ class PirateController extends Controller
                         $data['crypto_market_price'] = $crypto_market_price;
                         $data['crypto_price'] = $crypto_price;
                         
-                        $data['store_currency'] = $store_currency;
+                        $data['store_currency'] = strtoupper($store_currency);
                         $data['store_order_id'] = $store_order_id;
                         $data['store_order_price'] = $store_order_price;
                         $data['store_buyer_name'] = $store_buyer_name;

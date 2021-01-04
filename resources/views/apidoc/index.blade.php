@@ -61,7 +61,7 @@
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}" \
-    -d '{"store_order_id":"9","store_order_price":"1.00","store_currency":"USD","store_buyer_name":"John Doe","store_buyer_email":"test@test.com"}'
+    -d '{"store_order_id":"5","store_order_price":"1.00","store_currency":"USD","store_buyer_name":"John Doe","store_buyer_email":"test@test.com"}'
 </code></pre>
 <pre><code class="language-javascript">const url = new URL(
     "{{ url('') }}/api/v1/initiate"
@@ -74,7 +74,7 @@ let headers = {
 };
 
 let body = {
-    "store_order_id": "9",
+    "store_order_id": "5",
     "store_order_price": "1.00",
     "store_currency": "USD",
     "store_buyer_name": "John Doe",
@@ -99,7 +99,7 @@ $response = $client-&gt;post(
             'Authorization' =&gt; 'Bearer {token}',
         ],
         'json' =&gt; [
-            'store_order_id' =&gt; '9',
+            'store_order_id' =&gt; '5',
             'store_order_price' =&gt; '1.00',
             'store_currency' =&gt; 'USD',
             'store_buyer_name' =&gt; 'John Doe',
@@ -114,7 +114,7 @@ import json
 
 url = '{{ url('') }}/api/v1/initiate'
 payload = {
-    "store_order_id": "9",
+    "store_order_id": "5",
     "store_order_price": "1.00",
     "store_currency": "USD",
     "store_buyer_name": "John Doe",
@@ -134,7 +134,8 @@ response.json()</code></pre>
     "data": {
         "id": 10,
         "store_order_id": "5",
-        "store_order_price": "0.01",
+        "store_order_price": "1.00",
+        "store_currency": "USD",
         "store_buyer_name": "John Doe",
         "store_buyer_email": "test@test.com",
         "crypto_address": "zs1kmzcd8h22l8u38hnfdqfxegr0ml0nav9wfqcqpj3wapk8gury6gqlg4xf7gz4kakc4cfwq74xjl",
@@ -192,6 +193,140 @@ response.json()</code></pre>
 </tbody>
 </table>
 <!-- END_c0f17eb1d224734ed89e104b893a3fe4 -->
+<h1>Transaction Status</h1>
+<p>Check the current status of a PiratePay Transaction with a PiratePay ID or a Store ID.</p>
+<!-- START_7e987af97c1971c3327e9a8a99b293f2 -->
+<h2>api/v1/status</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST \
+    "{{ url('') }}/api/v1/status" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer {token}" \
+    -d '{"type":"store_id","id":"2563"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL(
+    "{{ url('') }}/api/v1/status"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {token}",
+};
+
+let body = {
+    "type": "store_id",
+    "id": "2563"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<pre><code class="language-php">
+$client = new \GuzzleHttp\Client();
+$response = $client-&gt;post(
+    '{{ url('') }}/api/v1/status',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+            'Authorization' =&gt; 'Bearer {token}',
+        ],
+        'json' =&gt; [
+            'type' =&gt; 'store_id',
+            'id' =&gt; '2563',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>
+<pre><code class="language-python">import requests
+import json
+
+url = '{{ url('') }}/api/v1/status'
+payload = {
+    "type": "store_id",
+    "id": "2563"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {token}'
+}
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": {
+        "id": 1,
+        "store_order_id": "2563",
+        "store_order_price": "0.02",
+        "store_currency": "USD",
+        "store_buyer_name": "John Doe",
+        "store_buyer_email": "test@test.com",
+        "crypto_address": "zs1yu96c2uz8g0k04qcprj2ssg2rmkuvzgfa2ug8u0rrrysmh2sjzwksx780j78n9qwu9v0ynnjhqk",
+        "crypto_market_price": "0.097645",
+        "crypto_price": "0.204824",
+        "start_balance": "0",
+        "expected_balance": "0.204824",
+        "end_balance": null,
+        "status_detailed": "pending",
+        "status_basic": "false",
+        "created_at": "2021-01-04 18:21:17",
+        "updated_at": "2020-01-04 18:21:17"
+    }
+}</code></pre>
+<blockquote>
+<p>Example response (422):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "error": "validation error",
+    "message": {
+        "type": [
+            "The type field is required."
+        ],
+        "id": [
+            "The id field is required."
+        ]
+    }
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST api/v1/status</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td>string</td>
+<td>required</td>
+<td>Search for transaction using either PiratePay &quot;id&quot; or store order number with &quot;store_id&quot;.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>string</td>
+<td>required</td>
+<td>The transaction id or store order id/number.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_7e987af97c1971c3327e9a8a99b293f2 -->
       </div>
       <div class="dark-box">
                         <div class="lang-selector">

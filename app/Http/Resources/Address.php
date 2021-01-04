@@ -18,6 +18,8 @@ class Address extends JsonResource
             'id' => $this->id,
             'store_order_id' => $this->store_order_id,
             'store_order_price' => $this->store_order_price,
+            'store_currency' => $this->store_currency,
+
             'store_buyer_name' => $this->store_buyer_name,
             'store_buyer_email' => $this->store_buyer_email,
 

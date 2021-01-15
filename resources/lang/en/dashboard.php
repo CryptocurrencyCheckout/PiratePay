@@ -103,6 +103,8 @@ return [
 
     'wallet_test_button' => 'Test an ARRR Transaction',
 
+    'demo_make_transaction' => 'Make your ARRR Test Payment',
+
 
 
 

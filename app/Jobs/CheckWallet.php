@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -10,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Denpa\Bitcoin\Traits\Bitcoind;
 use App\Transaction;
 use Carbon\Carbon;
+use App\Setting;
 use Exception;
 use App\Error;
 use Storage;
@@ -97,7 +99,7 @@ class CheckWallet implements ShouldQueue
                         $checkWallet->status = 1;
                         $checkWallet->save();
 
-                        UpdateWoocommerce::dispatch($checkWallet)->delay(now()->addminutes(1));
+                        $this->sendToModule($checkWallet);
 
                     } elseif ($endBalance >= $expectedTotal) {
 
@@ -108,7 +110,7 @@ class CheckWallet implements ShouldQueue
                         $checkWallet->status = 3;
                         $checkWallet->save();
 
-                        UpdateWoocommerce::dispatch($checkWallet)->delay(now()->addminutes(1));
+                        $this->sendToModule($checkWallet);
 
                     } else {
 
@@ -164,22 +166,12 @@ class CheckWallet implements ShouldQueue
 
     }
 
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function getBalance()
+    private function getBalance()
     {
 
         try {
-
             $pirateRPC = bitcoind()->client('pirate');
             $z_balance = $pirateRPC->z_getbalance($this->transaction['crypto_address'], $this->requiredConfirmations);
-            
             return $z_balance->get();
 
         } catch (Exception $e) {
@@ -189,8 +181,34 @@ class CheckWallet implements ShouldQueue
 
         }
 
+    }
+
+    private function checkSettings()
+    {
+
+        try {
+            $settings = Setting::findOrFail(1);
+            return $settings;
+        } catch (ModelNotFoundException $exception) {
+            $error = new Error;
+            $error->code = '404';
+            $error->error = __('errors.setting_error_not_found');
+            $error->save();
+        }
 
     }
 
+    private function sendToModule($checkWallet)
+    {
+
+        $settings = $this->checkSettings();
+        if ($settings['platform'] == 'woocommerce'){
+            UpdateWoocommerce::dispatch($checkWallet)->delay(now()->addminutes(1));
+        } elseif ($settings['platform'] == 'api'){
+            // do nothing, no module used for standard API calls.
+        } else {
+            //do nothing, no module selected.
+        }
+    }
 
 }

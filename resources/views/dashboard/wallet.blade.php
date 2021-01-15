@@ -8,7 +8,7 @@
         </div>
 
         <div class="container my-4">
-            <a href="{{ action('WalletController@testTransaction') }}" class="btn btn-primary btn-block font-weight-bold">@lang('dashboard.wallet_test_button')</a>
+            <a href="{{ action('DemoController@demonstration') }}" class="btn btn-primary btn-block font-weight-bold">@lang('dashboard.wallet_test_button')</a>
         </div>
 
         <div class="card">

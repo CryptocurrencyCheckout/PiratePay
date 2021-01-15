@@ -20,7 +20,7 @@
 
                     <div class="form-group">
                         {{Form::label('platform', 'Select Platform:')}}
-                        {{Form::select('platform', ['woocommerce' => 'WooCommerce'], null, ['class' => 'form-control', 'placeholder' => 'Choose Your Platform.']) }}
+                        {{Form::select('platform', ['api' => 'Status API', 'woocommerce' => 'WooCommerce'], null, ['class' => 'form-control', 'placeholder' => 'Choose Your Platform.']) }}
                     </div>
 
                     <div class="form-group">

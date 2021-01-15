@@ -13,6 +13,8 @@ return [
     |
     */
 
+    'setting_error_not_found' => 'PiratePay Response = PiratePay was unable to find your current store settings, please set the platform option inside the PiratePay Settings Tab.',
+
     'wallet_error_getbalance_no_response' => 'Wallet Response = No response from wallet while attempting to get wallet balance. Something is wrong with the wallet. Try Restarting the wallet, Resync the Blockchain, or Update Wallet Version.',
     'wallet_error_getinfo_no_response' => 'Wallet Response = No response from wallet while attempting to get wallet info. Something is wrong with the wallet. Try Restarting the wallet, Resync the Blockchain, or Update Wallet Version.',
     'wallet_error_address_no_response' => 'Wallet Response = No response from wallet while attempting to generate an address. Something is wrong with the wallet. Try Restarting the wallet, Resync the Blockchain, or Update Wallet Version.',

@@ -32,6 +32,7 @@ Route::get('/dashboard/transaction/{id}', 'DashboardController@transaction')->na
 
 Route::get('dashboard/api_token', 'DashboardController@api_token');
 
-Route::get('demo', 'WalletController@testTransaction');
-
 Route::get('documentation', 'ApiDocsController@index')->name('API Documentation');
+
+Route::get('dashboard/demo', 'DemoController@demonstration');
+Route::post('dashboard/demo/test', 'DemoController@testTransaction');

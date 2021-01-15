@@ -48,9 +48,9 @@ class SettingController extends Controller
 
         $this->validate($request, [
             'platform'=> 'required|alpha_num',
-            'client'=> 'required',
-            'secret'=> 'required',
-            'link'=> 'required',
+            'client'=> 'required_if:platform,woocommerce',
+            'secret'=> 'required_if:platform,woocommerce',
+            'link'=> 'required_if:platform,woocommerce',
             ]);
 
         $platform = Purifier::clean($request->input('platform'));

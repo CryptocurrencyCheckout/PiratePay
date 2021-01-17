@@ -31,7 +31,7 @@ return [
     'wallet_check_underpaid' => 'Wallet Check Response = Transaction found, but the amount received was not enough to finalize the order. Will keep scanning wallet for more transactions.',
 
     'woocommerce_error_bad_orderid' => 'Woocommerce Response = Woocommerce indicated that it could not find the order ID, this error could indicate that the order was deleted, did not go through, or the wrong value was received.',
-    'woocommerce_error_bad_client_request' => 'Woocommerce Response = 400 Bad Response. This could be caused by incorrect API link, wrong client credentials, or incorrect/missing Order ID.',
+    'woocommerce_error_bad_client_request' => 'Woocommerce Response = 400 Bad Response. This could be caused by incorrect API link, wrong client credentials, or incorrect/missing Order ID. You may also need to enable HTTP_AUTHORIZATION inside your Wordpress htaccess file to gain access to the wordpress rest API.',
     'woocommerce_error_bad_server_request' => 'Woocommerce Response = 500 Bad Response. This is usually caused when the server does not respond at all. Verify the WooCommerce Server is up, and check the API Link in Settings.',
     'woocommerce_error_settings_missing' => 'Woocommerce Response = Some of the Woocommerce settings inside PiratePay appear to not be set.',
     'woocommerce_error_values_missing' => 'Woocommerce Response = Cannot Update Order, Transaction Values appear to be missing. This could happen if the queue was cleared before completing.',
@@ -39,5 +39,4 @@ return [
 
     'decryption_error_failed' => 'Decryption Response = PiratePay was unable to Decrypt the api keys, this decryption error could be if the platforms encryption keys were updated/changed/deleted, or if they were never created during installation.',
 
-    'decryption_error_failed' => 'Decryption Response = PiratePay was unable to Decrypt the api keys, this decryption error could be if the platforms encryption keys were updated/changed/deleted, or if they were never created during installation.',
 ];

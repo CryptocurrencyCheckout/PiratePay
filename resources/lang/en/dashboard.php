@@ -14,6 +14,8 @@ return [
     */
 
     'error' => 'Error!',
+    'submit' => 'Submit',
+    'cancel' => 'Cancel',
 
     'navbar_login' => 'Login',
     'navbar_logout' => 'Logout',
@@ -105,12 +107,21 @@ return [
 
     'demo_make_transaction' => 'Make your ARRR Test Payment',
 
+    'settings_platform' => 'Choose your Platform.',
+    'settings_key' => 'The Callback Key is like an encrypted password used to authenticate transaction status callbacks to your store.',
+    'settings_link' => 'The link to access the stores API.',
+    'settings_client' => 'The Client Key to Access the Platform API.',
+    'settings_secret' => 'The Secret Key to Access the Platform API.',
 
+    'settings_select_platform' => 'Select Platform:',
+    'settings_callback_key' => 'Callback Key:',
+    'settings_suggested_key' => 'Suggested Callback Key:',
+    'settings_platform_link' => 'Platform API Link:',
+    'settings_platform_client' => 'Platform API Client Key:',
+    'settings_platform_secret' => 'Platform API Client Secret:',
 
-
-
-
-
-
+    'settings_piratepay_url' => 'PiratePay API URL:',
+    'settings_piratepay_key' => 'PiratePay API Key:',
+    'settings_piratepay_generate' => 'Generate API Key Here.',
 
 ];

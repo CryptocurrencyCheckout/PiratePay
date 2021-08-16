@@ -65,19 +65,11 @@ class DemoController extends Controller
 
         ]);
 
-        if ($response->successful()){
-
+        if ($response->successful()) {
             $payment = $response->json();
-
             return view('dashboard.demo_pay')->with('payment', $payment);
-
         } else {
-
             return 'Error!';
-            
         }
-        
     }
-
-
 }

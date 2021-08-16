@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API\V1;
+
 use App\Http\Resources\Address as AddressResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,10 +35,8 @@ class PirateController extends Controller
      */
     public function __construct()
     {
-        
         $this->middleware('auth:api');
         $this->middleware('throttle:50');
-
     }
 
 
@@ -47,7 +46,6 @@ class PirateController extends Controller
      * @bodyParam  store_currency string required The FIAT currency abbreviation. Example: USD
      * @bodyParam  store_buyer_name string required The name of customer. Example: John Doe
      * @bodyParam  store_buyer_email string required The email address of the Customer. Example: test@test.com
-     * 
      * @response  {
      *   "data": {
      *       "id": 10,
@@ -76,12 +74,12 @@ class PirateController extends Controller
             'store_order_price' => 'required|numeric|max:255',
             'store_buyer_name' => 'max:255',
             'store_buyer_email' => 'email',
+            'store_callback' => 'url',
 
         ]);
 
         if ($validator->fails()) {
-
-            Storage::append( 'ApiErrors.log', Carbon::now() . ' ' . __('errors.api_error_missing_fields') );
+            Storage::append('ApiErrors.log', Carbon::now() . ' ' . __('errors.api_error_missing_fields'));
 
             $error = new Error;
             $error->code = '400';
@@ -92,7 +90,6 @@ class PirateController extends Controller
                 ['error' => $validator->errors()],
                 400
             );
-
         };
 
         $store_currency = Purifier::clean($request->input('store_currency'));
@@ -100,11 +97,11 @@ class PirateController extends Controller
         $store_order_price = Purifier::clean($request->input('store_order_price'));
         $store_buyer_name = Purifier::clean($request->input('store_buyer_name'));
         $store_buyer_email = Purifier::clean($request->input('store_buyer_email'));
+        $store_callback = Purifier::clean($request->input('store_callback'));
 
 
-        if ( empty($store_order_id) && empty($store_order_price) && empty($store_buyer_name) && empty($store_buyer_email) ){
-
-            Storage::append( 'ApiErrors.log', Carbon::now() . ' ' . __('errors.api_error_missing_fields') );
+        if (empty($store_order_id) && empty($store_order_price) && empty($store_buyer_name) && empty($store_buyer_email)) {
+            Storage::append('ApiErrors.log', Carbon::now() . ' ' . __('errors.api_error_missing_fields'));
 
             $error = new Error;
             $error->code = '400';
@@ -115,17 +112,14 @@ class PirateController extends Controller
                 ['error' => __('errors.api_error_missing_fields')],
                 400
             );
-
         } else {
-
             if (Transaction::where('store_order_id', '=', $store_order_id)->where('store_order_price', '=', $store_order_price)->where('store_buyer_email', '=', $store_buyer_email)->count() > 0) {
-
                 $transaction = Transaction::where('store_order_id', '=', $store_order_id)
                     ->where('store_order_price', '=', $store_order_price)
                     ->where('store_buyer_email', '=', $store_buyer_email)
                     ->first();
           
-                Storage::append( 'ApiErrors.log', Carbon::now() . ' ' . __('errors.api_error_transaction_exists') );
+                Storage::append('ApiErrors.log', Carbon::now() . ' ' . __('errors.api_error_transaction_exists'));
 
                 $error = new Error;
                 $error->code = '200';
@@ -133,31 +127,37 @@ class PirateController extends Controller
                 $error->save();
 
 
-                if ($transaction->status === 1){
+                if ($transaction->status === 0) {
+                    Storage::append('QueueErrors.log', Carbon::now() . ' ' . __('errors.queue_error_transaction_pending'));
 
-                    Storage::append( 'QueueErrors.log', Carbon::now() . ' ' . __('errors.queue_error_transaction_paid') );
+                    $error = new Error;
+                    $error->code = '200';
+                    $error->error = __('errors.queue_error_transaction_pending');
+                    $error->save();
+                } elseif ($transaction->status === 1) {
+                    Storage::append('QueueErrors.log', Carbon::now() . ' ' . __('errors.queue_error_transaction_paid'));
 
                     $error = new Error;
                     $error->code = '200';
                     $error->error = __('errors.queue_error_transaction_paid');
                     $error->save();
+                } elseif ($transaction->status === 3) {
+                    Storage::append('QueueErrors.log', Carbon::now() . ' ' . __('errors.queue_error_transaction_overpaid'));
 
+                    $error = new Error;
+                    $error->code = '200';
+                    $error->error = __('errors.queue_error_transaction_overpaid');
+                    $error->save();
                 } else {
-
                     CheckWallet::dispatch($transaction)->delay(now()->addMinutes(1));
-
                 }
-
+                
                 return new AddressResource($transaction);
-
-
             } else {
-
                 $crypto_address = $this->getAddress();
 
-                if (empty($crypto_address)){
-    
-                    Storage::append( 'WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_address_no_response') );
+                if (empty($crypto_address)) {
+                    Storage::append('WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_address_no_response'));
     
                     $error = new Error;
                     $error->code = '503';
@@ -168,13 +168,10 @@ class PirateController extends Controller
                         ['error' => __('errors.wallet_error_address_no_response')],
                         503
                     );
-        
                 } else {
-    
                     $start_balance = $this->getBalance($crypto_address);
     
-                    if (isset($start_balance)){
-    
+                    if (isset($start_balance)) {
                         $crypto_market_price = $this->getMarketPrice();
                         $crypto_conversion = $store_order_price / $crypto_market_price;
                         $crypto_price = number_format($crypto_conversion, 6, '.', '');
@@ -192,16 +189,17 @@ class PirateController extends Controller
                         $data['store_order_price'] = $store_order_price;
                         $data['store_buyer_name'] = $store_buyer_name;
                         $data['store_buyer_email'] = $store_buyer_email;
+
+                        $data['store_callback'] = $store_callback;
+                        
                         
                         $transaction = $this->writeDatabase($data);
     
                         CheckWallet::dispatch($transaction)->delay(now()->addMinutes(1));
                         
                         return new AddressResource($transaction);
-    
                     } else {
-    
-                        Storage::append( 'WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_balance_no_response') );
+                        Storage::append('WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_balance_no_response'));
     
                         $error = new Error;
                         $error->code = '503';
@@ -212,15 +210,10 @@ class PirateController extends Controller
                             ['error' => __('errors.wallet_error_balance_no_response')],
                             503
                         );
-    
                     }
-                    
                 }
-
             }
-
         }
-
     }
 
     /**
@@ -233,19 +226,14 @@ class PirateController extends Controller
     {
 
         try {
-
             $pirateRPC = bitcoind()->client('pirate');
             $z_address = $pirateRPC->z_getnewaddress();
             
             return $z_address->get();
-
         } catch (Exception $e) {
-
             report($e);
             return false;
-
         }
-
     }
 
 
@@ -259,19 +247,14 @@ class PirateController extends Controller
     {
 
         try {
-
             $pirateRPC = bitcoind()->client('pirate');
             $z_balance = $pirateRPC->z_getbalance($crypto_address, 1);
             
             return $z_balance->get();
-
         } catch (Exception $e) {
-
             report($e);
             return false;
-
         }
-
     }
 
 
@@ -306,6 +289,8 @@ class PirateController extends Controller
         $transaction->crypto_percent = null;
         $transaction->crypto_qr = $qr_code;
 
+        $transaction->callback = $data['store_callback'];
+
         $transaction->status = '0';
         $transaction->wallet_checks = '0';
         $transaction->transmitted = '0';
@@ -313,7 +298,6 @@ class PirateController extends Controller
         $transaction->save();
 
         return $transaction;
-
     }
 
 
@@ -338,8 +322,5 @@ class PirateController extends Controller
         $response->throw()->json();
 
         return $response['arrr']['usd']['price'];
-
     }
-
-
 }

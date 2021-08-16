@@ -31,40 +31,25 @@ class WalletController extends Controller
      */
     public function dashboard()
     {
-
         $getInfo = $this->getInfo();
         $getTotalBalance = $this->getTotalBalance();
         $getInfoExplorer = $this->getInfoExplorer();
 
 
-        if ($getTotalBalance && $getInfo){
-
-            if ($getInfoExplorer){
-
+        if ($getTotalBalance && $getInfo) {
+            if ($getInfoExplorer) {
                 return view('dashboard.wallet')->with('wallet', $getInfo)->with('balance', $getTotalBalance)->with('explorer', $getInfoExplorer);
-
             } else {
-
-                return view('dashboard.wallet')->with('wallet', $getInfo)->with('balance', $getTotalBalance);  
+                return view('dashboard.wallet')->with('wallet', $getInfo)->with('balance', $getTotalBalance);
             }
-
         } else {
-
-            if ($getInfoExplorer){
-
+            if ($getInfoExplorer) {
                 return view('dashboard.wallet')->with('explorer', $getInfoExplorer);
-
             } else {
-
                 return view('dashboard.wallet');
-
             }
-
         }
-        
     }
-
-
 
     /**
      * Show the application wallet Dashboard.
@@ -75,25 +60,18 @@ class WalletController extends Controller
     {
 
         try {
-
             $pirateRPC = bitcoind()->client('pirate');
             $getinfo = $pirateRPC->getinfo();
-            
             return $getinfo->get();
-
         } catch (Exception $e) {
-
-            Storage::append( 'WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_getinfo_no_response') );
-
+            Storage::append('WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_getinfo_no_response'));
             $error = new Error;
             $error->code = '400';
             $error->error = __('errors.wallet_error_getinfo_no_response');
             $error->save();
 
             return null;
-
         }
-
     }
 
     /**
@@ -103,32 +81,21 @@ class WalletController extends Controller
      */
     private function getTotalBalance()
     {
-
         try {
-
             $pirateRPC = bitcoind()->client('pirate');
             $getinfo = $pirateRPC->z_gettotalbalance();
             
             return $getinfo->get();
-
         } catch (Exception $e) {
-
-
-            Storage::append( 'WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_getbalance_no_response') );
-
+            Storage::append('WalletErrors.log', Carbon::now() . ' ' . __('errors.wallet_error_getbalance_no_response'));
             $error = new Error;
             $error->code = '400';
             $error->error = __('errors.wallet_error_getbalance_no_response');
             $error->save();
 
             return null;
-
         }
-
-
     }
-
-
 
     /**
      * Display the specified resource.
@@ -150,13 +117,10 @@ class WalletController extends Controller
 
         $response->json();
 
-        if ($response->successful()){
-
+        if ($response->successful()) {
             return $response;
-
         } else {
-
-            Storage::append( 'ExplorerErrors.log', Carbon::now() . ' ' . __('errors.explorer_error_getinfo_no_response') );
+            Storage::append('ExplorerErrors.log', Carbon::now() . ' ' . __('errors.explorer_error_getinfo_no_response'));
 
             $error = new Error;
             $error->code = '400';
@@ -164,12 +128,6 @@ class WalletController extends Controller
             $error->save();
 
             return null;
-
         }
-
-
-
     }
-
-
 }

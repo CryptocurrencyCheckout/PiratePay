@@ -27,16 +27,14 @@ class StatusController extends Controller
      */
     public function __construct()
     {
-        
         $this->middleware('auth:api');
         $this->middleware('throttle:50');
-
     }
 
     /**
      * @bodyParam  type string required Search for transaction using either PiratePay "id" or store order number with "store_id". Example: store_id
      * @bodyParam  id string required The transaction id or store order id/number. Example: 2563
-     * 
+     *
      * @response  {
      *  "data": {
      *      "id": 1,
@@ -78,7 +76,7 @@ class StatusController extends Controller
 
             ]);
         
-            if($validator->fails()){
+            if ($validator->fails()) {
                 return response()->json([
                     "error" => 'validation error',
                     "message" => $validator->errors(),
@@ -88,8 +86,7 @@ class StatusController extends Controller
         $type = Purifier::clean($request->input('type'));
         $id = Purifier::clean($request->input('id'));
 
-        if ($type == 'id'){
-
+        if ($type == 'id') {
             try {
                 $transaction = Transaction::where('id', $id)->firstOrFail();
             } catch (ModelNotFoundException $e) {
@@ -98,9 +95,7 @@ class StatusController extends Controller
                     'error' => '404 not found'
                 ], 404);
             }
-
-        } elseif ($type == 'store_id'){
-
+        } elseif ($type == 'store_id') {
             try {
                 $transaction = Transaction::where('store_order_id', $id)->firstOrFail();
             } catch (ModelNotFoundException $e) {
@@ -109,12 +104,8 @@ class StatusController extends Controller
                     'error' => '404 not found'
                 ], 404);
             }
-
         }
 
         return new StatusResource($transaction);
-
     }
-
-
 }

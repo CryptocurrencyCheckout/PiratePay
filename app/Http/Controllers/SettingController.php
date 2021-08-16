@@ -29,9 +29,7 @@ class SettingController extends Controller
      */
     public function index()
     {
-
         $settings = Setting::find(1);
-
         return view('dashboard.settings')->with('settings', $settings);
     }
 
@@ -51,25 +49,37 @@ class SettingController extends Controller
             'client'=> 'required_if:platform,woocommerce',
             'secret'=> 'required_if:platform,woocommerce',
             'link'=> 'required_if:platform,woocommerce',
+            'key'=> 'required_if:platform,whmcs',
             ]);
 
         $platform = Purifier::clean($request->input('platform'));
         $client = Purifier::clean($request->input('client'));
         $secret = Purifier::clean($request->input('secret'));
         $link = Purifier::clean($request->input('link'));
-
-        $vote = Setting::updateOrCreate([
+        $key = Purifier::clean($request->input('key'));
+        
+        Setting::updateOrCreate(
+            [
             'id' => 1,
-        ],
-        [
+            ],
+            [
             'platform' => $platform,
-            'client' => Crypt::encryptString($client),
-            'secret' => Crypt::encryptString($secret),
+            'client' => $client,
+            'secret' => $this->encrypt($secret),
             'link' => $link,
-        ]);
+            'key' => $this->encrypt($key),
+            ]
+        );
 
         return redirect('/dashboard')->with('success', 'Information Received');
-
     }
 
+    private function encrypt($value)
+    {
+        if (empty($value)) {
+            return null;
+        } else {
+            return Crypt::encryptString($value);
+        }
+    }
 }

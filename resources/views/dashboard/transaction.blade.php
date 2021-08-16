@@ -157,7 +157,7 @@
                 </div>
                 <div class="col">
 
-                    @if ( $transaction->transmitted )
+                    @if ( $transaction->transmitted == 1 )
                         <h4><span style="color:green">@lang('dashboard.transaction_status_transmitted')</span></h4>
                     @else
                         <h4><span style="color:red">@lang('dashboard.transaction_status_not_transmitted')</span></h4>

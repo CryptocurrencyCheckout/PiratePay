@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        
+        $this->middleware('throttle:15');
     }
 
     /**
@@ -24,7 +24,5 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
-        $this->middleware('throttle:15');
     }
-
 }

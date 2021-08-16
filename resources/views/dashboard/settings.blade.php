@@ -19,29 +19,51 @@
                 {!! Form::open(['action' => 'SettingController@update', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
                     <div class="form-group">
-                        {{Form::label('platform', 'Select Platform:')}}
-                        {{Form::select('platform', ['api' => 'Status API', 'woocommerce' => 'WooCommerce'], null, ['class' => 'form-control', 'placeholder' => 'Choose Your Platform.']) }}
+                        {{Form::label('platform', __('dashboard.settings_select_platform'))}}
+                        {{Form::select('platform', ['api' => 'Status API', 'woocommerce' => 'WooCommerce', 'whmcs' => 'WHMCS'], isset($settings->platform) ? $settings->platform : null, ['class' => 'form-control', 'placeholder' => __('dashboard.settings_platform')]) }}
+                    </div>
+
+
+                    <div class="form-group">
+                        {{Form::label('key', __('dashboard.settings_callback_key'))}}
+                        {{Form::password('key', array('placeholder'=> __('dashboard.settings_key'), 'class'=>'form-control' ) ) }}
+                    </div>
+
+                    @isset($settings->key)
+                        <div class="py-2">
+                            <hr>
+                        </div>
+                    @else
+                        <div class="form-group">
+                            <b>{{__('dashboard.settings_suggested_key')}} </b>{{ Str::random(30) }}
+                        </div>
+                        <hr>
+                    @endisset
+
+
+                    <div class="form-group">
+                        {{Form::label('link', __('dashboard.settings_platform_link'))}}
+                        {{Form::text('link', isset($settings->link) ? $settings->link : null, ['class' => 'form-control', 'placeholder' => __('dashboard.settings_link')])}}
                     </div>
 
                     <div class="form-group">
-                        {{Form::label('link', 'Store API Link:')}}
-                        {{Form::text('link', '', ['class' => 'form-control', 'placeholder' => 'The link to access the stores API.'])}}
-                    </div>
-
-                    <div class="form-group">
-                        {{Form::label('client', 'Platform Client Key:')}}
-                        {{Form::text('client', '', ['class' => 'form-control', 'placeholder' => 'The Client Key to Access the Platform API.'])}}
+                        {{Form::label('client', __('dashboard.settings_platform_client'))}}
+                        {{Form::text('client', isset($settings->client) ? $settings->client : null, ['class' => 'form-control', 'placeholder' => __('dashboard.settings_client')])}}
                     </div>
 
                     <div class="form-group">                     
-                        {{Form::label('secret', 'Platform Client Secret:')}}
-                        {{Form::text('secret', '', ['class' => 'form-control', 'placeholder' => 'The Secret Key to Access the Platform API.'])}}
+                        {{Form::label('secret', __('dashboard.settings_platform_secret'))}}
+                        {{Form::password('secret', array('placeholder'=> __('dashboard.settings_secret'), 'class'=>'form-control' ) ) }}
+                    </div>
+
+                    <div class="py-2">
+                        <hr>
                     </div>
 
                 {{ csrf_field() }}
                 
-                <a href="/dashboard" class="btn btn-danger">Cancel</a>
-                {{Form::submit('Submit',['class'=>'btn btn-primary float-right'])}}
+                <a href="/dashboard" class="btn btn-danger">{{__('dashboard.cancel')}}</a>
+                {{Form::submit(__('dashboard.submit'),['class'=>'btn btn-primary float-right'])}}
 
                 {!! Form::close() !!}
 
@@ -62,7 +84,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <p class="font-weight-bold">PiratePay API URL:</p>
+                        <p>{{__('dashboard.settings_piratepay_url')}}</p>
                     </div>
                     <div class="col">
                         <p id="StoreID">{!! url('/api/v1'); !!}</p>
@@ -76,10 +98,10 @@
 
                 <div class="row">
                     <div class="col">
-                        <p class="font-weight-bold">PiratePay API Key:</p>
+                        <p>{{__('dashboard.settings_piratepay_key')}}</p>
                     </div>
                     <div class="col">
-                        <p id="StoreID"><a href='{!! url('/dashboard/api_token'); !!}'>Generate API Key Here...</a></p>
+                        <p id="StoreID"><a href='{!! url('/dashboard/api_token'); !!}'>{{__('dashboard.settings_piratepay_generate')}}</a></p>
                     </div>
                     <div class="col">
                         

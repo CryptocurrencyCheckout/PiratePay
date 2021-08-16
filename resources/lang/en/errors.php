@@ -26,6 +26,8 @@ return [
     'api_error_transaction_exists' => 'API Response = Transaction already exists, providing previously generated ARRR address to customer. This will also happen once per order if Email Fallback is enabled inside plugin.',
     
     'queue_error_transaction_paid' => 'Queue Response = Transaction was already found and marked as paid. Additional Wallet Scans Prevented.',
+    'queue_error_transaction_pending' => 'Queue Response = Transaction already pending and being scanned. Additional Wallet Scans Prevented.',
+    'queue_error_transaction_overpaid' => 'Queue Response = Transaction wal already found to be overpaid. Additional Wallet Scans Prevented.',
 
     'wallet_check_not_found' => 'Wallet Check Response = Unable to locate the transaction after several attempts.',
     'wallet_check_underpaid' => 'Wallet Check Response = Transaction found, but the amount received was not enough to finalize the order. Will keep scanning wallet for more transactions.',
@@ -38,5 +40,13 @@ return [
     'woocommerce_error_note_failed' => 'Woocommerce Response = Cannot Update Woocommerce Order Note, Was unable to find/edit the note attached to the order.',
 
     'decryption_error_failed' => 'Decryption Response = PiratePay was unable to Decrypt the api keys, this decryption error could be if the platforms encryption keys were updated/changed/deleted, or if they were never created during installation.',
+
+
+
+    'whmcs_error_bad_orderid' => 'WHMCS Response = WHMCS indicated that it could not find the order ID, this error could indicate that the order was deleted, did not go through, or the wrong value was received.',
+    'whmcs_error_bad_client_request' => 'WHMCS Response = 400 Bad Response. This could be caused by incorrect Callback Key, wrong URL, or client credentials.',
+    'whmcs_error_bad_server_request' => 'WHMCS Response = 500 Bad Response. This is usually caused when the server does not respond at all. Verify the WHMCS Server is up, and check the Callback URL.',
+    'whmcs_error_settings_missing' => 'WHMCS Response = Some of the WHMCS settings inside PiratePay appear to not be set.',
+    'whmcs_error_values_missing' => 'WHMCS Response = Cannot Update Order, Transaction Values appear to be missing. This could happen if the queue was cleared before completing.',
 
 ];

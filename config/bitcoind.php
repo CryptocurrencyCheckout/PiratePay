@@ -134,7 +134,7 @@ return [
     'pirate' => [
         'scheme'        => 'http',
         'host'          => 'localhost',
-        'port'          => 45453,
+        'port'          => env('PIRATE_PORT', '45453'),
         'user'          => env('PIRATE_USER', 'piratepay'),
         'password'      => env('PIRATE_PASSWORD', ''),
         'ca'            => null,

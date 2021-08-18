@@ -35,7 +35,7 @@ class CheckWallet implements ShouldQueue
     {
         $this->transaction = $transaction;
 
-        $this->requiredConfirmations = env('SCAN_REQUIRED_CONFIRMATIONS', 1);
+        $this->requiredConfirmations = env('SCAN_REQUIRED_CONFIRMATIONS', '1');
         $this->requiredAccuracy = env('SCAN_REQUIRED_ACCURACY', 98);
 
         $this->minutesBetweenChecks = env('SCAN_MINUTES_BETWEEN', 5);
@@ -145,7 +145,7 @@ class CheckWallet implements ShouldQueue
 
         try {
             $pirateRPC = bitcoind()->client('pirate');
-            $z_balance = $pirateRPC->z_getbalance($this->transaction['crypto_address'], $this->requiredConfirmations);
+            $z_balance = $pirateRPC->z_getbalance($this->transaction['crypto_address'], (int)$this->requiredConfirmations);
             return $z_balance->get();
         } catch (Exception $e) {
             report($e);
